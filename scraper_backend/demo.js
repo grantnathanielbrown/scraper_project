@@ -11,6 +11,5 @@ const r = new snoowrap({
     refreshToken: '23280913-oFa2QT9FoJEU2mLC2r-WeyHsXN0'
   });
 
-//   example request
-
-r.getHot().map(post => post.title).then(console.log);
+// 
+r.getHot().then(console.log);
