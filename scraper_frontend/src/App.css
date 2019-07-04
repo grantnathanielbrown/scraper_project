@@ -1,8 +1,18 @@
-.App {
+/* ALL */
+* {
+  margin: 0 auto;
   text-align: center;
+  font-family: 'Raleway', serif;
 }
+
+body {
+  background-color: blueviolet;
+}
+
+/* REQUEST FORM */
 
 .request-form {
   display: flex;
   flex-direction: column;
+  max-width: 30%;
 }
