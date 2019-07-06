@@ -1,6 +1,6 @@
 /* ALL */
 * {
-  margin: 0 auto;
+  
   text-align: center;
   font-family: 'Raleway', serif;
 }
@@ -9,10 +9,32 @@ body {
   background-color: blueviolet;
 }
 
+.App {
+  max-width: 60%;
+  margin: 0 auto;
+
+}
+
+.column-children {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.column-children input {
+  margin: 1em 0;
+  color: grey;
+  font-style: italic;
+  max-width: 50%;
+  
+}
+
+/* title */
+.title-container {
+
+}
 /* REQUEST FORM */
 
 .request-form {
-  display: flex;
-  flex-direction: column;
-  max-width: 30%;
+
 }
