@@ -11,5 +11,12 @@ const r = new snoowrap({
     refreshToken: '23280913-oFa2QT9FoJEU2mLC2r-WeyHsXN0'
   });
 
-// 
-r.getHot().then(console.log);
+// for methods like getHot or getTop, returns an array of listings
+
+let hotArray;
+r.getHot()
+.then(data => {
+  hotArray = data;
+  console.log(hotArray);
+});
+
