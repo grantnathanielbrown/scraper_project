@@ -38,7 +38,10 @@ handleSubmit(event) {
     return response.json();
   })
   .then(function(myJson) {
-    console.log(JSON.stringify(myJson));
+    // console.log(JSON.stringify(myJson));
+    let parsedJSON = myJson;
+    console.log(parsedJSON);
+    console.log(parsedJSON.data.children[0].data.score);
   });
   event.preventDefault();
 }
