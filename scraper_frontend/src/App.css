@@ -38,3 +38,21 @@ body {
 .request-form {
 
 }
+
+/* GENERATED POSTS */
+.posts-container {
+  max-width: 150%;
+  max-height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.generated-post {
+  height: 20em;
+  width: 20em;
+}
+
+.generated-post img {
+  height: 10em;
+  width: 10em;
+}

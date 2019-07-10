@@ -7,3 +7,6 @@ search term
 subreddit specification
 
 
+# TODO
+- remember to set up function to check if the server is deployed or not
+
