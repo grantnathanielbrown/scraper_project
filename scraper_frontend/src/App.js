@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import anime from 'animejs';
 import axios from 'axios';
+
+import CategoryForm from './CategoryForm.js';
+import TermForm from './TermForm.js';
 import placeholder from './wsi-imageoptim-reddit-marketing-.jpg';
 import './App.css';
 
@@ -8,12 +11,10 @@ export default class App extends Component {
   constructor(props) {
     super(props)
     this.state= {
-      categoryValue: "best",
-
-      filters: "Filters",
-      numPosts: "Number of Posts",
-      searchTerm: "Search Term",
-      subreddit: "Subreddit",
+      category: "Best",
+      minScore: null,
+      numPosts: null,
+      subreddit: null,
       postArray: [],
     }  
     this.handleChange = this.handleChange.bind(this);
@@ -34,12 +35,22 @@ componentDidMount () {
 }
 
 handleChange(event) {
+  // dynamically set the key of the setstate object to be equal to the idea of the specific form
+  let x = event.target.id;
   console.log(event.target.value);
-  this.setState({categoryValue: event.target.value});
-}
+  this.setState({[x]: event.target.value});
+  } 
+        
 
 handleSubmit(event) {
-  axios.get("http://localhost:3154")
+  axios.get("http://localhost:3154", {
+    params: {
+      category: this.state.category,
+      minScore: this.state.minScore,
+      numPosts: this.state.numPosts,
+      subreddit: this.state.subreddit
+    }
+  })
   .then(res => {
     let parsedResponse = res
     console.log(parsedResponse);
@@ -74,16 +85,8 @@ handleSubmit(event) {
 // }
 
 
-// handleChange(event) {
-//   let x = event.target.className;
-//   console.log(x);
-//   this.setState({
-//     x: event.target.value
-//   });
-// }
-
-
   render() {
+    
     // let posts = this.state.postArray.map( (post, key) => {
     // if (post.preview !== undefined) {
     //   return (
@@ -109,22 +112,33 @@ handleSubmit(event) {
         <h1 className="page-title">Scrappy</h1>
         <p className="blurb">Waste your time on Reddit more efficiently.</p>
         <form className="request-form column-children" onSubmit={this.handleSubmit}>
-        <label>
-          Categories:        
-          <select value={this.state.categoryValue} onChange={this.handleChange}>
-            <option value="best">Best</option>
-            <option value="controversial">Controversial</option>
-            <option value="hot">Hot</option>
-            <option value="new">New</option>
-            <option value="random">Random</option>
-            <option value="rising">Rising</option>
-            <option value="top">Top</option>
-          </select>
-        </label> 
-          {/* <input className="rounded filters" value={this.state.filters} onChange={this.handleChange} type="text"/>
-          <input className="rounded num-posts" value={this.state.numPosts} onChange={this.handleChange} type="text"/>
-          <input className="rounded search-term" value={this.state.searchTerm} onChange={this.handleChange} type="text"/>
-          <input className="rounded subreddit" value={this.state.subreddit} onChange={this.handleChange} type="text"/> */}
+        <div className="btn-group btn-group-toggle" data-toggle="buttons">
+          <label className="btn btn-secondary active">
+            <input type="radio" name="options" id="option1" autoComplete="off" checked/> Search By Category
+          </label>
+          <label className="btn btn-secondary">
+            <input type="radio" name="options" id="option2" autoComplete="off"/> Search By Term
+          </label>
+        </div>
+
+        <CategoryForm handleChange={this.handleChange.bind(this)}/>
+        
+        <label htmlFor="min-score">
+          Minimum Score (upvotes - downvotes)
+          <input id="min-score" className="rounded min-score" value={this.state.minScore} onChange={this.handleChange} type="number"/>
+        </label>
+
+        <label htmlFor="num-posts">
+          Number of Posts
+          <input id="num-posts" className="rounded num-posts" value={this.state.numPosts} onChange={this.handleChange} type="number"/>
+        </label>          
+
+          {/* <input className="rounded search-term" value={this.state.searchTerm} onChange={this.handleChange} type="text"/>
+           */}
+        <label htmlFor="subreddit">
+          Subreddit (without the r/)
+          <input id="subreddit" className="rounded subreddit" value={this.state.subreddit} onChange={this.handleChange} type="text"/>
+        </label>        
           <input className="rounded" value="Go!" type="submit" />        
         </form>
         <div className="posts-container">
