@@ -12,9 +12,9 @@ export default class App extends Component {
     super(props)
     this.state= {
       category: "Best",
-      minScore: null,
-      numPosts: null,
-      subreddit: null,
+      minScore: -100,
+      numPosts: 25,
+      subreddit: "",
       postArray: [],
     }  
     this.handleChange = this.handleChange.bind(this);
@@ -123,22 +123,21 @@ handleSubmit(event) {
 
         <CategoryForm handleChange={this.handleChange.bind(this)}/>
         
-        <label htmlFor="min-score">
+        <label htmlFor="minScore">
           Minimum Score (upvotes - downvotes)
-          <input id="min-score" className="rounded min-score" value={this.state.minScore} onChange={this.handleChange} type="number"/>
+          <input id="minScore" className="rounded min-score" value={this.state.minScore} onChange={this.handleChange} type="number"/>
         </label>
 
-        <label htmlFor="num-posts">
-          Number of Posts
-          <input id="num-posts" className="rounded num-posts" value={this.state.numPosts} onChange={this.handleChange} type="number"/>
+        <label htmlFor="numPosts">
+          Number of Posts (up to 25)
+          <input id="numPosts" className="rounded num-posts" value={this.state.numPosts} onChange={this.handleChange} type="number"/>
         </label>          
 
-          {/* <input className="rounded search-term" value={this.state.searchTerm} onChange={this.handleChange} type="text"/>
-           */}
         <label htmlFor="subreddit">
           Subreddit (without the r/)
           <input id="subreddit" className="rounded subreddit" value={this.state.subreddit} onChange={this.handleChange} type="text"/>
-        </label>        
+        </label>
+
           <input className="rounded" value="Go!" type="submit" />        
         </form>
         <div className="posts-container">
