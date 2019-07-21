@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 
+
 var snoowrap = require('snoowrap');
 
 const port = 3154;
@@ -19,24 +20,25 @@ app.use(function(req, res, next) {
   next();
 });
 
+var minScore = -100;
 
-
-
-// for methods like getHot or getTop, returns an array of listings
-// 1. receive request from front en
-// 2.
+var checkScore = function (post) {
+  console.log(post.score, minScore);
+  return post.score > minScore;
+}
 
 app.get('/', function (req, res) {
+  minScore = req.query.minScore;
   console.log(req.query);
-  // console.log(req.query.category);
   var x = `get${req.query.category}`;
-  console.log(x);
   r[x](req.query.subreddit)
   .then(data => {
+    console.log(data[0].score);
+    data = data.slice(0 , req.query.numPosts).filter(checkScore);
     console.log(data);
     res.send(data);
   })
-  
+
 })
 
 app.listen(port, () => console.log(`Ready to get some meme reddit posts on port ${port}!`))
