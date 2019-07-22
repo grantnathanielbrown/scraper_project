@@ -20,8 +20,7 @@ export default class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 }
-// no preview = use placeholder
-// preview && 
+
 componentDidMount () {
   // When the page opens, animate the title
   anime({
@@ -72,10 +71,10 @@ handleSubmit(event) {
   })
   event.preventDefault();
 }
-
+// undefined = no preview
   render() {
     let posts = this.state.postArray.map( (post, key) => {
-    if (post.preview !== undefined) {
+    if (post.preview !== undefined && post.preview.enabled !== false) {
       return (
         <div className="generated-post">
           <img src={post.url} alt="thumbnail of a Reddit post"/>
