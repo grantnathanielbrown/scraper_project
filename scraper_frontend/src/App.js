@@ -43,6 +43,7 @@ handleChange(event) {
         
 
 handleSubmit(event) {
+  let that = this;
   axios.get("http://localhost:3154", {
     params: {
       category: this.state.category,
@@ -52,61 +53,47 @@ handleSubmit(event) {
     }
   })
   .then(res => {
-    let parsedResponse = res
-    console.log(parsedResponse);
+    return res;
+  })
+  .then(function(myJson) {
+    
+    let postArray = [];
+    let parsedJSON = myJson;
+    console.log(parsedJSON.data[0]);
+    for (let i = 0; i < that.state.numPosts; i++) {
+      let miniPost = {score: parsedJSON.data[i].score,
+      title: parsedJSON.data[i].title,
+      url: parsedJSON.data[i].url,
+      preview: parsedJSON.data[i].preview};
+      postArray.push(miniPost);
+    }
+    that.setState({postArray: postArray});
+    console.log(that.state.postArray);
   })
   event.preventDefault();
 }
 
-// handleSubmit(event) {
-//   let that = this;
-//   console.log(this.state.categoryValue);
-//   fetch(`https://www.reddit.com/${this.state.categoryValue}.json`, { mode: 'cors' })
-//   .then(function(response) {
-//     return response.json();
-//   })
-//   .then(function(myJson) {
-    
-//     let postArray = [];
-//     let parsedJSON = myJson;
-//     console.log(parsedJSON);
-//     for (let i = 0; i < 25; i++) {
-//       let miniPost = {score: parsedJSON.data.children[i].data.score,
-//       title: parsedJSON.data.children[i].data.title,
-//       url: parsedJSON.data.children[i].data.url,
-//       preview: parsedJSON.data.children[i].data.preview};
-//       postArray.push(miniPost);
-//     }
-//     that.setState({postArray: postArray});
-//     console.log(that.state.postArray);
-//   })
-
-//   event.preventDefault();
-// }
-
-
   render() {
-    
-    // let posts = this.state.postArray.map( (post, key) => {
-    // if (post.preview !== undefined) {
-    //   return (
-    //     <div className="generated-post">
-    //       <img src={post.url} alt="thumbnail of a Reddit post"/>
-    //       <ul>{post.title}</ul>
-    //       <ul>{post.score}</ul>
-    //     </div>
-    //   )
-    // } else {
-    //   return (
-    //     <div className="generated-post">
-    //       <img src={placeholder} alt="Reddit logo"/>
-    //       <ul>{post.title}</ul>
-    //       <ul>{post.score}</ul>
-    //     </div>        
-    //   )
-    // }
+    let posts = this.state.postArray.map( (post, key) => {
+    if (post.preview !== undefined) {
+      return (
+        <div className="generated-post">
+          <img src={post.url} alt="thumbnail of a Reddit post"/>
+          <ul>{post.title}</ul>
+          <ul>{post.score}</ul>
+        </div>
+      )
+    } else {
+      return (
+        <div className="generated-post">
+          <img src={placeholder} alt="Reddit logo"/>
+          <ul>{post.title}</ul>
+          <ul>{post.score}</ul>
+        </div>        
+      )
+    }
 
-    // })
+    })
     return (
       <div className="App">
         <h1 className="page-title">Scrappy</h1>
@@ -141,7 +128,7 @@ handleSubmit(event) {
           <input className="rounded" value="Go!" type="submit" />        
         </form>
         <div className="posts-container">
-          {/* {posts} */}
+          {posts}
         </div>
       </div>
     );
