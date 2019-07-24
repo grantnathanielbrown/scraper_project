@@ -38,7 +38,6 @@ componentDidMount () {
 handleChange(event) {
   // dynamically set the key of the setstate object to be equal to the idea of the specific form
   let x = event.target.id;
-  console.log(event.target.value);
   this.setState({[x]: event.target.value});
   } 
         
@@ -63,8 +62,10 @@ handleSubmit(event) {
     console.log(parsedJSON.data.length);
 
     for (let i = 0; i < parsedJSON.data.length; i++) {
+      let lengthChecker = parsedJSON.data[i].title.length < 150 ? parsedJSON.data[i].title : parsedJSON.data[i].title.slice(0,150) + '...'
+      console.log(parsedJSON.data[i].title.length);
       let miniPost = {score: parsedJSON.data[i].score,
-      title: parsedJSON.data[i].title,
+      title: lengthChecker,
       url: parsedJSON.data[i].url,
       preview: parsedJSON.data[i].preview};
       postArray.push(miniPost);
