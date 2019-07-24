@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import anime from 'animejs';
 import axios from 'axios';
-
+  
 import CategoryForm from './CategoryForm.js';
 import TermForm from './TermForm.js';
 import placeholder from './wsi-imageoptim-reddit-marketing-.jpg';
@@ -21,16 +21,18 @@ export default class App extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
 }
 
-componentDidMount () {
-  // When the page opens, animate the title
+risingAnimation (element) {
   anime({
-    targets: '.page-title',
+    targets: element,
     translateY: [100,0],
     opacity: [0,1],
     delay: anime.stagger(100, {start: 500}),
     backgroundColor: '#00FFFFFF',
     duration: 1600,
   })
+}
+componentDidMount () {
+  this.risingAnimation('.page-title');
 }
 
 handleChange(event) {
@@ -54,12 +56,13 @@ handleSubmit(event) {
   .then(res => {
     return res;
   })
-  .then(function(myJson) {
+  .then(function(parsedJSON) {
     
     let postArray = [];
-    let parsedJSON = myJson;
-    console.log(parsedJSON.data[0]);
-    for (let i = 0; i < that.state.numPosts; i++) {
+
+    console.log(parsedJSON.data.length);
+
+    for (let i = 0; i < parsedJSON.data.length; i++) {
       let miniPost = {score: parsedJSON.data[i].score,
       title: parsedJSON.data[i].title,
       url: parsedJSON.data[i].url,
@@ -69,6 +72,10 @@ handleSubmit(event) {
     that.setState({postArray: postArray});
     console.log(that.state.postArray);
   })
+  .then(data =>{
+    this.risingAnimation('.generated-post');
+  })
+
   event.preventDefault();
 }
 // undefined = no preview
@@ -76,9 +83,9 @@ handleSubmit(event) {
     let posts = this.state.postArray.map( (post, key) => {
     if (post.preview !== undefined && post.preview.enabled !== false) {
       return (
-        <div className="generated-post">
+        <div className="generated-post rounded">
           <img src={post.url} alt="thumbnail of a Reddit post"/>
-          <ul>{post.title}</ul>
+          <ul className="post-title">{post.title}</ul>
           <ul>{post.score}</ul>
         </div>
       )
@@ -86,7 +93,7 @@ handleSubmit(event) {
       return (
         <div className="generated-post">
           <img src={placeholder} alt="Reddit logo"/>
-          <ul>{post.title}</ul>
+          <ul className="post-title">{post.title}</ul>
           <ul>{post.score}</ul>
         </div>        
       )
@@ -107,28 +114,31 @@ handleSubmit(event) {
           </label>
         </div>
 
-        <CategoryForm handleChange={this.handleChange.bind(this)}/>
-        
-        <label htmlFor="minScore">
-          Minimum Score (upvotes - downvotes)
-          <input id="minScore" className="rounded min-score" value={this.state.minScore} onChange={this.handleChange} type="number"/>
-        </label>
 
-        <label htmlFor="numPosts">
-          Number of Posts (up to 25)
-          <input id="numPosts" className="rounded num-posts" value={this.state.numPosts} onChange={this.handleChange} type="number"/>
-        </label>          
+          <CategoryForm handleChange={this.handleChange.bind(this)}/>
+          
+          <label htmlFor="minScore">
+            Minimum Score (upvotes - downvotes)
+            <input id="minScore" className="rounded min-score" value={this.state.minScore} onChange={this.handleChange} type="number"/>
+          </label>
 
-        <label htmlFor="subreddit">
-          Subreddit (without the r/)
-          <input id="subreddit" className="rounded subreddit" value={this.state.subreddit} onChange={this.handleChange} type="text"/>
-        </label>
+          <label htmlFor="numPosts">
+            Number of Posts (up to 25)
+            <input id="numPosts" className="rounded num-posts" value={this.state.numPosts} onChange={this.handleChange} type="number"/>
+          </label>          
 
-          <input className="rounded" value="Go!" type="submit" />        
-        </form>
+          <label htmlFor="subreddit">
+            Subreddit (without the r/)
+            <input id="subreddit" className="rounded subreddit" value={this.state.subreddit} onChange={this.handleChange} type="text"/>
+          </label>
+
+            <input className="rounded" value="Go!" type="submit" />        
+
+          </form>
         <div className="posts-container">
           {posts}
         </div>
+
       </div>
     );
   }
