@@ -20,6 +20,27 @@ export default class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 }
+componentDidMount () {
+  this.risingAnimation('.page-title');
+}
+
+loadingAnimation () {
+  anime({
+    targets: '.dot',
+    translateX: 125,
+    loop: true,
+    easing: 'cubicBezier(0.950, 0.095, 0.060, 0.950)',
+    direction: 'alternate',
+  })
+  anime({
+    targets: '.two',
+    translateX: -125,
+    loop: true,
+    easing: 'cubicBezier(0.950, 0.095, 0.060, 0.950)',
+    direction: 'alternate',
+  })
+
+}
 
 risingAnimation (element) {
   anime({
@@ -31,8 +52,30 @@ risingAnimation (element) {
     duration: 1600,
   })
 }
-componentDidMount () {
-  this.risingAnimation('.page-title');
+
+
+drawCircle () {
+
+var canvas = document.getElementById('circle-container');
+
+    var ctx = canvas.getContext('2d'); 
+    var X = 50;
+    var Y = 50;
+    var R = 10;
+
+    ctx.beginPath();
+    ctx.arc(X, Y, R, 0, 2 * Math.PI, false);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#00FFE7';
+    ctx.fillStyle = "#00FFE7";
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(X * 2, Y, R, 0, 2 * Math.PI, false);
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#E67F0D';
+    ctx.fillStyle = "#E67F0D";    
+    ctx.fill();
 }
 
 handleChange(event) {
@@ -43,6 +86,7 @@ handleChange(event) {
         
 
 handleSubmit(event) {
+  this.loadingAnimation();
   let that = this;
   axios.get("http://localhost:3154", {
     params: {
@@ -55,6 +99,7 @@ handleSubmit(event) {
   .then(res => {
     return res;
   })
+
   .then(function(parsedJSON) {
     
     let postArray = [];
@@ -133,10 +178,16 @@ handleSubmit(event) {
             <input id="subreddit" className="rounded subreddit" value={this.state.subreddit} onChange={this.handleChange} type="text"/>
           </label>
 
-            <input className="rounded" value="Go!" type="submit" />        
+            <input className="form-submit rounded" value="Search" type="submit" />        
 
           </form>
         <div className="posts-container">
+        <span className="dot"></span>
+        <span className="two"></span>
+        <input onClick={this.loadingAnimation} className="form-submit rounded" value="Animate" type="submit" />
+        {/* <canvas id="circle-container" width="150" height="150"></canvas> */}
+        {/* <input onClick={this.drawCircle} className="animation-button" value="test" type="submit" /> */}
+
           {posts}
         </div>
 
