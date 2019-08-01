@@ -16,6 +16,7 @@ export default class App extends Component {
       numPosts: 25,
       subreddit: "",
       postArray: [],
+      circleStatus: false,
     }  
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,14 +26,15 @@ componentDidMount () {
 }
 
 loadingAnimation () {
-  anime({
+
+  let orangeCircle = anime({
     targets: '.dot',
     translateX: 125,
     loop: true,
     easing: 'cubicBezier(0.950, 0.095, 0.060, 0.950)',
     direction: 'alternate',
   })
-  anime({
+  let blueCircle = anime({
     targets: '.two',
     translateX: -125,
     loop: true,
@@ -41,6 +43,8 @@ loadingAnimation () {
   })
 
 }
+
+
 
 risingAnimation (element) {
   anime({
@@ -53,31 +57,6 @@ risingAnimation (element) {
   })
 }
 
-
-drawCircle () {
-
-var canvas = document.getElementById('circle-container');
-
-    var ctx = canvas.getContext('2d'); 
-    var X = 50;
-    var Y = 50;
-    var R = 10;
-
-    ctx.beginPath();
-    ctx.arc(X, Y, R, 0, 2 * Math.PI, false);
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = '#00FFE7';
-    ctx.fillStyle = "#00FFE7";
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.arc(X * 2, Y, R, 0, 2 * Math.PI, false);
-    ctx.lineWidth = 3;
-    ctx.strokeStyle = '#E67F0D';
-    ctx.fillStyle = "#E67F0D";    
-    ctx.fill();
-}
-
 handleChange(event) {
   // dynamically set the key of the setstate object to be equal to the idea of the specific form
   let x = event.target.id;
@@ -86,7 +65,20 @@ handleChange(event) {
         
 
 handleSubmit(event) {
+
+  // let postsContainer = document.getElementsByClassName("posts-container");
+  // let orangeCircle = document.createElement("span");
+  // let blueCircle = document.createElement("span");
+  // orangeCircle.setAttribute("id", "orange-circle");
+  // blueCircle.setAttribute("id", "blue-circle");
+  // postsContainer.appendChild(orangeCircle);
+  // postsContainer.appendChild(blueCircle);
+
   this.loadingAnimation();
+  var orangeCircle = document.getElementById('orange-circle');
+  orangeCircle.classList.toggle("hidden");
+  var blueCircle = document.getElementById('blue-circle');
+  blueCircle.classList.toggle("hidden");
   let that = this;
   axios.get("http://localhost:3154", {
     params: {
@@ -115,6 +107,9 @@ handleSubmit(event) {
       preview: parsedJSON.data[i].preview};
       postArray.push(miniPost);
     }
+    
+    orangeCircle.classList.toggle("hidden");    
+    blueCircle.classList.toggle("hidden");
     that.setState({postArray: postArray});
     console.log(that.state.postArray);
   })
@@ -126,6 +121,7 @@ handleSubmit(event) {
 }
 // undefined = no preview
   render() {
+
     let posts = this.state.postArray.map( (post, key) => {
     if (post.preview !== undefined && post.preview.enabled !== false) {
       return (
@@ -149,7 +145,7 @@ handleSubmit(event) {
     return (
       <div className="App">
         <h1 className="page-title">Scrappy</h1>
-        <p className="blurb">Waste your time on Reddit more efficiently.</p>
+        {/* <p className="blurb">Waste your time on Reddit more efficiently.</p> */}
         <form className="request-form column-children" onSubmit={this.handleSubmit}>
         <div className="btn-group btn-group-toggle" data-toggle="buttons">
           <label className="btn btn-secondary active">
@@ -182,9 +178,8 @@ handleSubmit(event) {
 
           </form>
         <div className="posts-container">
-        <span className="dot"></span>
-        <span className="two"></span>
-        <input onClick={this.loadingAnimation} className="form-submit rounded" value="Animate" type="submit" />
+        <span id="orange-circle hidden"></span>
+        <span id="blue-circle hidden"></span>
         {/* <canvas id="circle-container" width="150" height="150"></canvas> */}
         {/* <input onClick={this.drawCircle} className="animation-button" value="test" type="submit" /> */}
 
