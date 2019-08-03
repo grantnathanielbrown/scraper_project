@@ -26,21 +26,23 @@ componentDidMount () {
 }
 
 loadingAnimation () {
-
+  console.log('animation has begun');
   let orangeCircle = anime({
-    targets: '.dot',
+    targets: '.orange-circle',
     translateX: 125,
     loop: true,
     easing: 'cubicBezier(0.950, 0.095, 0.060, 0.950)',
     direction: 'alternate',
   })
+
   let blueCircle = anime({
-    targets: '.two',
+    targets: '.blue-circle',
     translateX: -125,
     loop: true,
     easing: 'cubicBezier(0.950, 0.095, 0.060, 0.950)',
     direction: 'alternate',
   })
+
 
 }
 
@@ -65,20 +67,12 @@ handleChange(event) {
         
 
 handleSubmit(event) {
-
-  // let postsContainer = document.getElementsByClassName("posts-container");
-  // let orangeCircle = document.createElement("span");
-  // let blueCircle = document.createElement("span");
-  // orangeCircle.setAttribute("id", "orange-circle");
-  // blueCircle.setAttribute("id", "blue-circle");
-  // postsContainer.appendChild(orangeCircle);
-  // postsContainer.appendChild(blueCircle);
-
+  this.setState({circleStatus: true});
   this.loadingAnimation();
-  var orangeCircle = document.getElementById('orange-circle');
-  orangeCircle.classList.toggle("hidden");
-  var blueCircle = document.getElementById('blue-circle');
-  blueCircle.classList.toggle("hidden");
+  console.log(this.state.circleStatus);
+
+
+
   let that = this;
   axios.get("http://localhost:3154", {
     params: {
@@ -108,8 +102,8 @@ handleSubmit(event) {
       postArray.push(miniPost);
     }
     
-    orangeCircle.classList.toggle("hidden");    
-    blueCircle.classList.toggle("hidden");
+    that.setState({circleStatus: false});
+    console.log(that.state.circleStatus);
     that.setState({postArray: postArray});
     console.log(that.state.postArray);
   })
@@ -121,7 +115,16 @@ handleSubmit(event) {
 }
 // undefined = no preview
   render() {
-
+    // let loadingAnimation = () => {
+    //   if (this.state.circleStatus === true) {
+    //     return (
+    //       <div>
+    //         <span id="orange-circle"></span>
+    //         <span id="blue-circle"></span>
+    //       </div>
+    //     )
+    //   }
+    // }
     let posts = this.state.postArray.map( (post, key) => {
     if (post.preview !== undefined && post.preview.enabled !== false) {
       return (
@@ -178,10 +181,12 @@ handleSubmit(event) {
 
           </form>
         <div className="posts-container">
-        <span id="orange-circle hidden"></span>
-        <span id="blue-circle hidden"></span>
-        {/* <canvas id="circle-container" width="150" height="150"></canvas> */}
-        {/* <input onClick={this.drawCircle} className="animation-button" value="test" type="submit" /> */}
+          {this.state.circleStatus ?
+            <div>
+              <span className="orange-circle" id="orange-circle"></span>
+              <span className="blue-circle" id="blue-circle"></span>
+            </div> 
+          : <div></div>}
 
           {posts}
         </div>
