@@ -130,7 +130,7 @@ handleSubmit(event) {
     let posts = this.state.postArray.map( (post, key) => {
     if (post.preview !== undefined && post.preview.enabled !== false) {
       return (
-        <div className="generated-post rounded">
+        <div className="generated-post">
           <img src={post.url} alt="thumbnail of a Reddit post"/>
           <ul className="post-title">{post.title}</ul>
           <ul>{post.score}</ul>
@@ -165,17 +165,17 @@ handleSubmit(event) {
           <CategoryForm handleChange={this.handleChange.bind(this)}/>
           
           <label htmlFor="minScore">
-            Minimum Score (upvotes - downvotes)
+            Minimum Score (upvotes - downvotes) 	&nbsp;	&nbsp;	&nbsp;	&nbsp;	&nbsp;
             <input id="minScore" className="rounded min-score" value={this.state.minScore} onChange={this.handleChange} type="number"/>
           </label>
 
           <label htmlFor="numPosts">
-            Number of Posts (up to 25)
+            Number of Posts (up to 25)	&nbsp;	&nbsp;	&nbsp;	&nbsp;	&nbsp;
             <input id="numPosts" className="rounded num-posts" value={this.state.numPosts} onChange={this.handleChange} type="number"/>
           </label>          
 
           <label htmlFor="subreddit">
-            Subreddit (without the r/)
+            Subreddit (without the r/)	&nbsp;	&nbsp;	&nbsp;	&nbsp;	&nbsp;
             <input id="subreddit" className="rounded subreddit" value={this.state.subreddit} onChange={this.handleChange} type="text"/>
           </label>
 

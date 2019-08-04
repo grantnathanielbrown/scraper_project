@@ -1,4 +1,4 @@
-/* TEST */
+/* ANIMATION */
 #orange-circle {
   height: 25px;
   width: 25px;
@@ -59,7 +59,7 @@ body {
 label:focus {
   font-size: 150%;
 }
-/* title */
+/* TITLE */
 
 /* REQUEST FORM */
 input:focus, textarea:focus {
@@ -80,6 +80,10 @@ input[type=number] {
   font-size: 2em;
 }
 
+.category-form {
+  margin-top: 1em; 
+}
+
 
 /* GENERATED POSTS */
 .posts-container {
@@ -89,6 +93,7 @@ input[type=number] {
   justify-content: center;
 }
 .generated-post {
+  border-radius: 10px;
   height: 20em;
   width: 20em;
   border: solid .2em #444140;
