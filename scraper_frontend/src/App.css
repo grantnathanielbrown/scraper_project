@@ -5,6 +5,7 @@
   background-color: #E67F0D;
   border-radius: 50%;
   display: inline-block;
+  opacity: 0;
 }
 
 #blue-circle {
@@ -14,6 +15,7 @@
   border-radius: 50%;
   display: inline-block;
   background-color: #00FFE7;
+  opacity: 0;
 }
 
 /* ALL */

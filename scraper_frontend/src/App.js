@@ -16,13 +16,23 @@ export default class App extends Component {
       numPosts: 25,
       subreddit: "",
       postArray: [],
-      circleStatus: false,
+      animationTracker: false,
+      
     }  
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 }
 componentDidMount () {
   this.risingAnimation('.page-title');
+}
+
+opacityAnimation(elements,opacity) {
+  console.log(elements,opacity);
+  anime({
+    targets: elements,
+    opacity: opacity,
+    duration: 0.01,
+  })
 }
 
 loadingAnimation () {
@@ -34,7 +44,7 @@ loadingAnimation () {
     easing: 'cubicBezier(0.950, 0.095, 0.060, 0.950)',
     direction: 'alternate',
   })
-
+  orangeCircle.restart();
   let blueCircle = anime({
     targets: '.blue-circle',
     translateX: -125,
@@ -42,7 +52,7 @@ loadingAnimation () {
     easing: 'cubicBezier(0.950, 0.095, 0.060, 0.950)',
     direction: 'alternate',
   })
-
+  blueCircle.restart();
 
 }
 
@@ -67,9 +77,13 @@ handleChange(event) {
         
 
 handleSubmit(event) {
-  this.setState({circleStatus: true});
-  this.loadingAnimation();
-  console.log(this.state.circleStatus);
+  // this.setState({circleStatus: true});
+  this.opacityAnimation(['.orange-circle','.blue-circle'],1);
+  if (this.state.animationTracker === false) {
+    this.loadingAnimation();
+    this.setState({animationTracker: true});
+  }
+  
 
 
 
@@ -101,9 +115,7 @@ handleSubmit(event) {
       preview: parsedJSON.data[i].preview};
       postArray.push(miniPost);
     }
-    
-    that.setState({circleStatus: false});
-    console.log(that.state.circleStatus);
+    that.opacityAnimation(['.orange-circle','.blue-circle'],0)
     that.setState({postArray: postArray});
     console.log(that.state.postArray);
   })
@@ -115,16 +127,6 @@ handleSubmit(event) {
 }
 // undefined = no preview
   render() {
-    // let loadingAnimation = () => {
-    //   if (this.state.circleStatus === true) {
-    //     return (
-    //       <div>
-    //         <span id="orange-circle"></span>
-    //         <span id="blue-circle"></span>
-    //       </div>
-    //     )
-    //   }
-    // }
     let posts = this.state.postArray.map( (post, key) => {
     if (post.preview !== undefined && post.preview.enabled !== false) {
       return (
@@ -180,13 +182,11 @@ handleSubmit(event) {
             <input className="form-submit rounded" value="Search" type="submit" />        
 
           </form>
+          <div>
+            <span className="orange-circle" id="orange-circle"></span>
+            <span className="blue-circle" id="blue-circle"></span>
+          </div> 
         <div className="posts-container">
-          {this.state.circleStatus ?
-            <div>
-              <span className="orange-circle" id="orange-circle"></span>
-              <span className="blue-circle" id="blue-circle"></span>
-            </div> 
-          : <div></div>}
 
           {posts}
         </div>
