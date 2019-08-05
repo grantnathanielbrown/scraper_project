@@ -3,6 +3,7 @@ import anime from 'animejs';
 import axios from 'axios';
   
 import CategoryForm from './CategoryForm.js';
+
 import TermForm from './TermForm.js';
 import placeholder from './wsi-imageoptim-reddit-marketing-.jpg';
 import './App.css';
@@ -15,15 +16,24 @@ export default class App extends Component {
       minScore: -100,
       numPosts: 25,
       subreddit: "",
+      searchTerm: "",
+      
       postArray: [],
       animationTracker: false,
+      selectedForm: "Category",
       
     }  
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.changeForm = this.changeForm.bind(this);
 }
 componentDidMount () {
   this.risingAnimation('.page-title');
+}
+
+changeForm (state) {
+  console.log();
+  this.setState({selectedForm: state});
 }
 
 opacityAnimation(elements,opacity) {
@@ -152,18 +162,26 @@ handleSubmit(event) {
         <h1 className="page-title">Scrappy</h1>
         {/* <p className="blurb">Waste your time on Reddit more efficiently.</p> */}
         <form className="request-form column-children" onSubmit={this.handleSubmit}>
+          
         <div className="btn-group btn-group-toggle" data-toggle="buttons">
-          <label className="btn btn-secondary active">
-            <input type="radio" name="options" id="option1" autoComplete="off" checked/> Search By Category
+          <label onClick={() => this.changeForm("Category")} className="btn btn-secondary active">
+            <input type="radio" name="options" id="option1" autoComplete="off"/>
+            Search By Category
           </label>
-          <label className="btn btn-secondary">
-            <input type="radio" name="options" id="option2" autoComplete="off"/> Search By Term
+          <label onClick={() => this.changeForm("Search")} className="btn btn-secondary">
+            <input type="radio" name="options" id="option2" autoComplete="off"/>
+            
+            Search By Term
           </label>
         </div>
 
 
-          <CategoryForm handleChange={this.handleChange.bind(this)}/>
-          
+          {this.state.selectedForm === "Category" 
+          ? <CategoryForm handleChange={this.handleChange.bind(this)}/>
+          : <TermForm handleChange={this.handleChange.bind(this)}
+          searchTerm={this.state.searchTerm}/>
+          }
+
           <label htmlFor="minScore">
             Minimum Score (upvotes - downvotes) 	&nbsp;	&nbsp;	&nbsp;	&nbsp;	&nbsp;
             <input id="minScore" className="rounded min-score" value={this.state.minScore} onChange={this.handleChange} type="number"/>
