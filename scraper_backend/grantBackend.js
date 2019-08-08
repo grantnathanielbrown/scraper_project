@@ -27,7 +27,7 @@ var checkScore = function (post) {
   return post.score > minScore;
 }
 
-app.get('/', function (req, res) {
+app.get('/Category', function (req, res) {
   minScore = req.query.minScore;
   console.log(req.query);
   var x = `get${req.query.category}`;
@@ -39,6 +39,21 @@ app.get('/', function (req, res) {
     res.send(data);
   })
 
+})
+
+app.get('/Search', function (req, res) {
+  minScore = req.query.minScore;
+  console.log(req.query);
+  r.search({
+    query: req.query.searchTerm,
+    time: 'hour',
+    subreddit: req.query.subreddit,
+  }).then(data => {
+    console.log(data);
+    data = data.slice(0 , req.query.numPosts).filter(checkScore);
+    console.log(data);
+    res.send(data);
+  })
 })
 
 app.listen(port, () => console.log(`Ready to get some meme reddit posts on port ${port}!`))

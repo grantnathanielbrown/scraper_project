@@ -103,12 +103,16 @@ input[type=number] {
   border: solid .2em #444140;
   color: white;
   margin: .5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .post-title:hover {
   color: #E67F0D;
 }
-.generated-post:hover {
-  /* background-color: rgba(0, 255, 231, 1); */
+.generated-post a {
+  color: inherit;
+  text-decoration: none;
   
 }
 

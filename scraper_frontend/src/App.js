@@ -16,7 +16,9 @@ export default class App extends Component {
       minScore: -100,
       numPosts: 25,
       subreddit: "",
+  
       searchTerm: "",
+      timeframe: "hour",
       
       postArray: [],
       animationTracker: false,
@@ -24,7 +26,7 @@ export default class App extends Component {
       
     }  
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.categoryCall = this.categoryCall.bind(this);
     this.changeForm = this.changeForm.bind(this);
 }
 componentDidMount () {
@@ -33,7 +35,11 @@ componentDidMount () {
 
 changeForm (state) {
   console.log();
-  this.setState({selectedForm: state});
+  this.setState({
+    selectedForm: state,
+    searchTerm: "",
+    category: "Best",
+  });
 }
 
 opacityAnimation(elements,opacity) {
@@ -86,21 +92,22 @@ handleChange(event) {
   } 
         
 
-handleSubmit(event) {
-  // this.setState({circleStatus: true});
+categoryCall(event) {
+
   this.opacityAnimation(['.orange-circle','.blue-circle'],1);
   if (this.state.animationTracker === false) {
     this.loadingAnimation();
     this.setState({animationTracker: true});
   }
   
-
-
-
   let that = this;
-  axios.get("http://localhost:3154", {
+
+
+
+  axios.get(`https://scrappy-gnb.herokuapp.com/${this.state.selectedForm}`, {
     params: {
       category: this.state.category,
+      searchTerm: this.state.searchTerm,
       minScore: this.state.minScore,
       numPosts: this.state.numPosts,
       subreddit: this.state.subreddit
@@ -141,17 +148,21 @@ handleSubmit(event) {
     if (post.preview !== undefined && post.preview.enabled !== false) {
       return (
         <div className="generated-post">
-          <img src={post.url} alt="thumbnail of a Reddit post"/>
-          <ul className="post-title">{post.title}</ul>
-          <ul>{post.score}</ul>
+          <a href={post.url}>
+            <img src={post.url} alt="thumbnail of a Reddit post"/>
+            <ul className="post-title">{post.title}</ul>
+          </a>
+          <ul>Score: {post.score}</ul>
         </div>
       )
     } else {
       return (
         <div className="generated-post">
-          <img src={placeholder} alt="Reddit logo"/>
-          <ul className="post-title">{post.title}</ul>
-          <ul>{post.score}</ul>
+          <a href={post.url}>
+            <img src={placeholder} alt="Reddit logo"/>
+            <ul className="post-title">{post.title}</ul>
+          </a>
+          <ul>Score: {post.score}</ul>
         </div>        
       )
     }
@@ -161,7 +172,7 @@ handleSubmit(event) {
       <div className="App">
         <h1 className="page-title">Scrappy</h1>
         {/* <p className="blurb">Waste your time on Reddit more efficiently.</p> */}
-        <form className="request-form column-children" onSubmit={this.handleSubmit}>
+        <form className="request-form column-children" onSubmit={this.categoryCall}>
           
         <div className="btn-group btn-group-toggle" data-toggle="buttons">
           <label onClick={() => this.changeForm("Category")} className="btn btn-secondary active">
