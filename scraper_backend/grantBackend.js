@@ -5,7 +5,7 @@ const cors = require('cors');
 
 var snoowrap = require('snoowrap');
 
-const port = 3154;
+app.set('port', process.env.PORT || 3154);
 
 const r = new snoowrap({
   userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36',
@@ -41,4 +41,6 @@ app.get('/', function (req, res) {
 
 })
 
-app.listen(port, () => console.log(`Ready to get some meme reddit posts on port ${port}!`))
+app.listen(app.get('port'), function () {
+  console.log(`Ready to see some Reddit posts on ${app.get('port')} `)
+})
