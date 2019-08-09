@@ -4,7 +4,7 @@ const cors = require('cors');
 
 
 var snoowrap = require('snoowrap');
-
+console.log(process.env.PORT);
 app.set('port', process.env.PORT || 3154);
 
 const r = new snoowrap({
@@ -41,6 +41,8 @@ app.get('/', function (req, res) {
 
 })
 
-app.listen(app.get('port'), function () {
-  console.log(`Ready to see some Reddit posts on ${app.get('port')} `)
-})
+var port = process.env.PORT || 3154;
+
+app.listen(port, function () {
+  console.log('Example app listening on port ' + port + '!');
+});
