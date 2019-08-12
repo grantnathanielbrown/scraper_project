@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.468054e3.chunk.css",
-    "main.js": "/static/js/main.7e5e7b71.chunk.js",
-    "main.js.map": "/static/js/main.7e5e7b71.chunk.js.map",
-    "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
-    "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
-    "static/js/2.741b94ac.chunk.js": "/static/js/2.741b94ac.chunk.js",
-    "static/js/2.741b94ac.chunk.js.map": "/static/js/2.741b94ac.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.f5991e96b30fe70accbc7f926c36c0ee.js": "/precache-manifest.f5991e96b30fe70accbc7f926c36c0ee.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.468054e3.chunk.css.map": "/static/css/main.468054e3.chunk.css.map",
-    "static/media/wsi-imageoptim-reddit-marketing-.jpg": "/static/media/wsi-imageoptim-reddit-marketing-.a171ce6d.jpg"
+    "main.css": "/scraper_project/static/css/main.468054e3.chunk.css",
+    "main.js": "/scraper_project/static/js/main.721490e6.chunk.js",
+    "main.js.map": "/scraper_project/static/js/main.721490e6.chunk.js.map",
+    "runtime~main.js": "/scraper_project/static/js/runtime~main.d6dcd1d8.js",
+    "runtime~main.js.map": "/scraper_project/static/js/runtime~main.d6dcd1d8.js.map",
+    "static/js/2.741b94ac.chunk.js": "/scraper_project/static/js/2.741b94ac.chunk.js",
+    "static/js/2.741b94ac.chunk.js.map": "/scraper_project/static/js/2.741b94ac.chunk.js.map",
+    "index.html": "/scraper_project/index.html",
+    "precache-manifest.5036f380ee5f94ad16815527f6eb201f.js": "/scraper_project/precache-manifest.5036f380ee5f94ad16815527f6eb201f.js",
+    "service-worker.js": "/scraper_project/service-worker.js",
+    "static/css/main.468054e3.chunk.css.map": "/scraper_project/static/css/main.468054e3.chunk.css.map",
+    "static/media/wsi-imageoptim-reddit-marketing-.jpg": "/scraper_project/static/media/wsi-imageoptim-reddit-marketing-.a171ce6d.jpg"
   }
 }
