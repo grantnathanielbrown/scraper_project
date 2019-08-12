@@ -26,6 +26,7 @@
 
 ul {
   padding: 0;
+
 }
 
 body {
@@ -103,16 +104,19 @@ input[type=number] {
   border: solid .2em #444140;
   color: white;
   margin: .5em;
+  
+}
+
+.generated-post a {
+  text-decoration: none;
+  color: white;
 }
 .post-title:hover {
   color: #E67F0D;
-}
-.generated-post:hover {
-  /* background-color: rgba(0, 255, 231, 1); */
-  
 }
 
 .generated-post img {
   height: 10em;
   width: 10em;
+  margin: 0.5em;
 }
