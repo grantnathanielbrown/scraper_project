@@ -1,3 +1,6 @@
+# OBJECTIVES
+The chief goal of this project is to learn more about APIs, scripting, and React. My project has two desired features - first, to allow users to view Reddit posts based on certain queries that Reddit itself does not allow users to search by. Second, to allow users to download searched content in aggregation.
+
 
 # TODO
 - remember to set up function to check if the server is deployed or not
