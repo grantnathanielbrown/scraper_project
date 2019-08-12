@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/scraper_project/static/css/main.468054e3.chunk.css",
+    "main.css": "/scraper_project/static/css/main.91aeb867.chunk.css",
     "main.js": "/scraper_project/static/js/main.721490e6.chunk.js",
     "main.js.map": "/scraper_project/static/js/main.721490e6.chunk.js.map",
     "runtime~main.js": "/scraper_project/static/js/runtime~main.d6dcd1d8.js",
@@ -8,9 +8,9 @@
     "static/js/2.741b94ac.chunk.js": "/scraper_project/static/js/2.741b94ac.chunk.js",
     "static/js/2.741b94ac.chunk.js.map": "/scraper_project/static/js/2.741b94ac.chunk.js.map",
     "index.html": "/scraper_project/index.html",
-    "precache-manifest.5036f380ee5f94ad16815527f6eb201f.js": "/scraper_project/precache-manifest.5036f380ee5f94ad16815527f6eb201f.js",
+    "precache-manifest.1fd05e6e496f9e2624dc21b7099206ba.js": "/scraper_project/precache-manifest.1fd05e6e496f9e2624dc21b7099206ba.js",
     "service-worker.js": "/scraper_project/service-worker.js",
-    "static/css/main.468054e3.chunk.css.map": "/scraper_project/static/css/main.468054e3.chunk.css.map",
+    "static/css/main.91aeb867.chunk.css.map": "/scraper_project/static/css/main.91aeb867.chunk.css.map",
     "static/media/wsi-imageoptim-reddit-marketing-.jpg": "/scraper_project/static/media/wsi-imageoptim-reddit-marketing-.a171ce6d.jpg"
   }
 }
