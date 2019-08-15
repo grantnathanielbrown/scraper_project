@@ -24,7 +24,8 @@ export default class App extends Component {
       animationTracker: false,
       selectedForm: "Category",
       
-    }  
+    }
+    this.formRef = React.createRef();  
     this.handleChange = this.handleChange.bind(this);
     this.categoryCall = this.categoryCall.bind(this);
     this.changeForm = this.changeForm.bind(this);
@@ -33,9 +34,11 @@ export default class App extends Component {
 
 componentDidMount () {
   this.risingAnimation('.page-title');
-
 }
 
+disableInput (input) {
+  input.setAttribute("disabled","disabled");
+}
 changeForm (state) {
   console.log();
   this.setState({
@@ -103,6 +106,7 @@ categoryCall(event) {
   console.log(backendURL);
 
   this.opacityAnimation(['.orange-circle','.blue-circle'],1);
+  
   if (this.state.animationTracker === false) {
     this.loadingAnimation();
     this.setState({animationTracker: true});
@@ -152,6 +156,13 @@ categoryCall(event) {
 }
 // undefined = no preview
   render() {
+
+    const x = this.formRef.current;
+    // this.disableInput(x);
+    // if (this.state.category === "Best") {
+    //   document.getElementById("subreddit").setAttribute("disabled","disabled");
+    // }
+
     let posts = this.state.postArray.map( (post, key) => {
     if (post.preview !== undefined && post.preview.enabled !== false) {
       return (
@@ -179,17 +190,27 @@ categoryCall(event) {
     return (
       <div className="App">
         <h1 className="page-title">Scrappy</h1>
-        {/* <p className="blurb">Waste your time on Reddit more efficiently.</p> */}
+        <p>
+          <button id="about-button" className="btn btn-primary button-triad" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            About
+          </button>
+        </p>
+        <div className="collapse" id="collapseExample">
+          <div className="card card-body">
+          The chief goal of this project is to learn more about APIs, scripting, and React. My project has two desired features - first, to allow users to view Reddit posts based on certain queries that Reddit itself does not allow users to search by. Second, to allow users to download searched content in aggregation.
+          </div>
+          
+        </div>        
         <form className="request-form column-children" onSubmit={this.categoryCall}>
           
         <div className="btn-group btn-group-toggle" data-toggle="buttons">
-          <label onClick={() => this.changeForm("Category")} className="btn btn-secondary active">
+          <label onClick={() => this.changeForm("Category")} className="btn btn-secondary active button-triad">
             <input type="radio" name="options" id="option1" autoComplete="off"/>
             Search By Category
           </label>
-          <label onClick={() => this.changeForm("Search")} className="btn btn-secondary">
-            <input type="radio" name="options" id="option2" autoComplete="off"/>
-            
+
+          <label onClick={() => this.changeForm("Search")} className="btn btn-secondary button-triad">
+            <input type="radio" name="options" id="option2" autoComplete="off"/>            
             Search By Term
           </label>
         </div>
@@ -213,7 +234,7 @@ categoryCall(event) {
 
           <label htmlFor="subreddit">
             Subreddit (without the r/)	&nbsp;	&nbsp;	&nbsp;	&nbsp;	&nbsp;
-            <input id="subreddit" className="rounded subreddit" value={this.state.subreddit} onChange={this.handleChange} type="text"/>
+            <input ref={this.formRef} id="subreddit" className="rounded subreddit" value={this.state.subreddit} onChange={this.handleChange} type="text"/>
           </label>
 
             <input className="form-submit rounded" value="Search" type="submit" />        
@@ -222,9 +243,9 @@ categoryCall(event) {
           <div>
             <span className="orange-circle" id="orange-circle"></span>
             <span className="blue-circle" id="blue-circle"></span>
-          </div> 
-        <div className="posts-container">
+          </div>
 
+        <div className="posts-container">
           {posts}
         </div>
 
