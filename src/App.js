@@ -34,11 +34,10 @@ export default class App extends Component {
 
 componentDidMount () {
   this.risingAnimation('.page-title');
+  // let input = this.formRef.current;
+  // input.disabled = true;
 }
 
-disableInput (input) {
-  input.setAttribute("disabled","disabled");
-}
 changeForm (state) {
   console.log();
   this.setState({
@@ -93,9 +92,15 @@ risingAnimation (element) {
 
 handleChange(event) {
   // dynamically set the key of the setstate object to be equal to the idea of the specific form
-  let x = event.target.id;
-  this.setState({[x]: event.target.value});
-  } 
+  let category = event.target.id;
+  let input = this.formRef.current;
+  this.setState({[category]: event.target.value});
+  // if (event.target.value === "Best") {
+  //   input.disabled = true;
+  // } else {
+  //   input.disabled = false;
+  // }
+} 
         
 
 categoryCall(event) {
@@ -148,7 +153,7 @@ categoryCall(event) {
     that.setState({postArray: postArray});
     console.log(that.state.postArray);
   })
-  .then(data =>{
+  .then(data => {
     this.risingAnimation('.generated-post');
   })
 
@@ -156,12 +161,6 @@ categoryCall(event) {
 }
 // undefined = no preview
   render() {
-
-    const x = this.formRef.current;
-    // this.disableInput(x);
-    // if (this.state.category === "Best") {
-    //   document.getElementById("subreddit").setAttribute("disabled","disabled");
-    // }
 
     let posts = this.state.postArray.map( (post, key) => {
     if (post.preview !== undefined && post.preview.enabled !== false) {
@@ -230,12 +229,19 @@ categoryCall(event) {
           <label htmlFor="numPosts">
             Number of Posts (up to 25)	&nbsp;	&nbsp;	&nbsp;	&nbsp;	&nbsp;
             <input id="numPosts" className="rounded num-posts" value={this.state.numPosts} onChange={this.handleChange} type="number"/>
-          </label>          
+          </label>
 
+          {this.state.category === "Best" && this.state.selectedForm === "Category" ? 
           <label htmlFor="subreddit">
             Subreddit (without the r/)	&nbsp;	&nbsp;	&nbsp;	&nbsp;	&nbsp;
-            <input ref={this.formRef} id="subreddit" className="rounded subreddit" value={this.state.subreddit} onChange={this.handleChange} type="text"/>
+            <input disabled id="subreddit" className="rounded subreddit" value="Does not work for 'best'" onChange={this.handleChange} type="text"/>
+          </label> :
+          <label htmlFor="subreddit">
+            Subreddit (without the r/)	&nbsp;	&nbsp;	&nbsp;	&nbsp;	&nbsp;
+            <input id="subreddit" className="rounded subreddit" value={this.state.subreddit} onChange={this.handleChange} type="text"/>
           </label>
+        }          
+
 
             <input className="form-submit rounded" value="Search" type="submit" />        
 
