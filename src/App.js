@@ -24,8 +24,7 @@ export default class App extends Component {
       animationTracker: false,
       selectedForm: "Category",
       
-    }
-    this.formRef = React.createRef();  
+    } 
     this.handleChange = this.handleChange.bind(this);
     this.categoryCall = this.categoryCall.bind(this);
     this.changeForm = this.changeForm.bind(this);
@@ -34,8 +33,6 @@ export default class App extends Component {
 
 componentDidMount () {
   this.risingAnimation('.page-title');
-  // let input = this.formRef.current;
-  // input.disabled = true;
 }
 
 changeForm (state) {
@@ -93,13 +90,7 @@ risingAnimation (element) {
 handleChange(event) {
   // dynamically set the key of the setstate object to be equal to the idea of the specific form
   let category = event.target.id;
-  let input = this.formRef.current;
   this.setState({[category]: event.target.value});
-  // if (event.target.value === "Best") {
-  //   input.disabled = true;
-  // } else {
-  //   input.disabled = false;
-  // }
 } 
         
 
@@ -218,7 +209,7 @@ categoryCall(event) {
           {this.state.selectedForm === "Category" 
           ? <CategoryForm handleChange={this.handleChange.bind(this)}/>
           : <TermForm handleChange={this.handleChange.bind(this)}
-          searchTerm={this.state.searchTerm}/>
+          searchTerm={this.state.searchTerm} timeframe={this.state.timeframe} />
           }
 
           <label htmlFor="minScore">
