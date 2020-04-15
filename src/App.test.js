@@ -55,39 +55,9 @@ describe('Main Application', () => {
             expect(app.find('CategoryForm').exists()).toBe(false);
             expect(app.state('selectedForm')).toBe("Search");
         });
-        
-
-
-
-        
-    });
-
-    describe('Search Function', () => {
-
-        // WIP
-        it("reveals the loading animation when the search is still processing", () => {
-
-            // app.find('.form-submit').simulate('submit');
-
-            // const orangeCircle = app.find('#orange-circle');
-            // expect(orangeCircle).toHaveStyle('opacity: 1');
-
-            // const orangeCircle = getByTestId('orange-circle');
-            // expect(getComputedStyle(orangeCircle.getDOMNode()).getPropertyValue('opacity')).toBe('1');  
-            
-
-
-        });
-
-        it("hides the loading animation when the search is done processing", () => {
-
-        });
-
-        it("passes each generated post props", () => {
-            
-        })
 
     });
+
 
 
 });
