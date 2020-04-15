@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Term Form renders properly 1`] = `
+<div
+  className="category-form"
+>
+  <label>
+    Category           
+    <select
+      id="category"
+      onChange={[MockFunction]}
+    >
+      <option
+        value="Best"
+      >
+        Best
+      </option>
+      <option
+        value="Controversial"
+      >
+        Controversial
+      </option>
+      <option
+        value="Hot"
+      >
+        Hot
+      </option>
+      <option
+        value="New"
+      >
+        New
+      </option>
+      <option
+        value="Rising"
+      >
+        Rising
+      </option>
+      <option
+        value="Top"
+      >
+        Top
+      </option>
+    </select>
+  </label>
+</div>
+`;

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import anime from 'animejs';
 import axios from 'axios';
-  
-import CategoryForm from './CategoryForm.js';
 
+import GeneratedPost from './GeneratedPost'; 
+import CategoryForm from './CategoryForm.js';
 import TermForm from './TermForm.js';
+
 import placeholder from './wsi-imageoptim-reddit-marketing-.jpg';
 import './App.css';
 
@@ -26,7 +27,7 @@ export default class App extends Component {
       
     } 
     this.handleChange = this.handleChange.bind(this);
-    this.categoryCall = this.categoryCall.bind(this);
+    this.backendCall = this.backendCall.bind(this);
     this.changeForm = this.changeForm.bind(this);
 }
 
@@ -36,7 +37,6 @@ componentDidMount () {
 }
 
 changeForm (state) {
-  console.log();
   this.setState({
     selectedForm: state,
     searchTerm: "",
@@ -63,6 +63,7 @@ loadingAnimation () {
     direction: 'alternate',
   })
   orangeCircle.restart();
+
   let blueCircle = anime({
     targets: '.blue-circle',
     translateX: -125,
@@ -88,13 +89,13 @@ risingAnimation (element) {
 }
 
 handleChange(event) {
-  // dynamically set the key of the setstate object to be equal to the idea of the specific form
+  // dynamically set the key of the setstate object to be equal to the id of the specific form
   let category = event.target.id;
   this.setState({[category]: event.target.value});
 } 
         
 
-categoryCall(event) {
+backendCall(event) {
   let backendURL = `https://scrappy-gnb.herokuapp.com/${this.state.selectedForm}`
   if (process.env.NODE_ENV === "development") {
     backendURL = `http://localhost:3154/${this.state.selectedForm}`
@@ -129,17 +130,14 @@ categoryCall(event) {
     
     let postArray = [];
 
-    console.log(parsedJSON.data.length);
-
     for (let i = 0; i < parsedJSON.data.length; i++) {
       let lengthChecker = parsedJSON.data[i].title.length < 150 ? parsedJSON.data[i].title : parsedJSON.data[i].title.slice(0,150) + '...'
-      console.log(parsedJSON.data[i].title.length);
       let miniPost = {score: parsedJSON.data[i].score,
       title: lengthChecker,
       url: parsedJSON.data[i].url,
       preview: parsedJSON.data[i].preview};
       postArray.push(miniPost);
-    }
+    };
     that.opacityAnimation(['.orange-circle','.blue-circle'],0)
     that.setState({postArray: postArray});
     console.log(that.state.postArray);
@@ -156,23 +154,11 @@ categoryCall(event) {
     let posts = this.state.postArray.map( (post, key) => {
     if (post.preview !== undefined && post.preview.enabled !== false) {
       return (
-        <div className="generated-post">
-          <a href={post.url}>
-            <img src={post.url} alt="thumbnail of a Reddit post"/>
-            <ul className="post-title">{post.title}</ul>
-          </a>
-          <ul>Score: {post.score}</ul>
-        </div>
+        <GeneratedPost url={post.url} imageSRC={post.url} title={post.title} score={post.score}/>
       )
     } else {
       return (
-        <div className="generated-post">
-          <a href={post.url}>
-            <img src={placeholder} alt="Reddit logo"/>
-            <ul className="post-title">{post.title}</ul>
-          </a>
-          <ul>Score: {post.score}</ul>
-        </div>        
+        <GeneratedPost url={post.url} imageSRC={placeholder} title={post.title} score={post.score}/>       
       )
     }
 
@@ -191,15 +177,15 @@ categoryCall(event) {
           </div>
           
         </div>        
-        <form className="request-form column-children" onSubmit={this.categoryCall}>
+        <form className="request-form column-children" onSubmit={this.backendCall}>
           
         <div className="btn-group btn-group-toggle" data-toggle="buttons">
-          <label onClick={() => this.changeForm("Category")} className="btn btn-secondary active button-triad">
+          <label onClick={() => this.changeForm("Category")} className="category-label btn btn-secondary active button-triad">
             <input type="radio" name="options" id="option1" autoComplete="off"/>
             Search By Category
           </label>
 
-          <label onClick={() => this.changeForm("Search")} className="btn btn-secondary button-triad">
+          <label onClick={() => this.changeForm("Search")} className="search-label btn btn-secondary button-triad">
             <input type="radio" name="options" id="option2" autoComplete="off"/>            
             Search By Term
           </label>
@@ -238,7 +224,7 @@ categoryCall(event) {
 
           </form>
           <div>
-            <span className="orange-circle" id="orange-circle"></span>
+            <span data-testid="orange-circle" className="orange-circle" id="orange-circle"></span>
             <span className="blue-circle" id="blue-circle"></span>
           </div>
 

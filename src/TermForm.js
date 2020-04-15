@@ -6,7 +6,7 @@ export default class TermForm extends Component {
             <div className="term-form">
                 <label>
                 Search Keyword 	&nbsp;	&nbsp;	&nbsp;	&nbsp;	&nbsp;       
-                <input id="timeframe" className="rounded timeframe" value={this.props.timeframe} onChange={this.props.handleChange} type="text"/>
+                <input id="searchTerm" className="rounded" value={this.props.searchTerm} onChange={this.props.handleChange} type="text"/>
                 </label>
 
                 <label>

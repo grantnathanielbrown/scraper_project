@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Term Form renders properly 1`] = `
+<div
+  className="term-form"
+>
+  <label>
+    Search Keyword           
+    <input
+      className="rounded"
+      id="searchTerm"
+      onChange={[MockFunction]}
+      type="text"
+      value="dummy search term"
+    />
+  </label>
+  <label>
+    Timeframe           
+    <select
+      id="category"
+      onChange={[MockFunction]}
+    >
+      <option
+        value="Hour"
+      >
+        Hour
+      </option>
+      <option
+        value="Day"
+      >
+        Day
+      </option>
+      <option
+        value="Week"
+      >
+        Week
+      </option>
+      <option
+        value="Month"
+      >
+        Month
+      </option>
+      <option
+        value="Year"
+      >
+        Year
+      </option>
+      <option
+        value="All"
+      >
+        All
+      </option>
+    </select>
+  </label>
+</div>
+`;
