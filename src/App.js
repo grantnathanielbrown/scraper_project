@@ -114,6 +114,9 @@ backendCall(event) {
 
 
   axios.get(backendURL, {
+    headers: {
+      // 'Content-Type': 'text/html',
+    },
     params: {
       category: this.state.category,
       searchTerm: this.state.searchTerm,
@@ -151,7 +154,7 @@ backendCall(event) {
 // undefined = no preview
   render() {
 
-    let posts = this.state.postArray.map( (post, key) => {
+    let posts = this.state.postArray.map( (post) => {
     if (post.preview !== undefined && post.preview.enabled !== false) {
       return (
         <GeneratedPost url={post.url} imageSRC={post.url} title={post.title} score={post.score}/>
