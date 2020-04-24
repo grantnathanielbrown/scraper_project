@@ -130,7 +130,7 @@ backendCall(event) {
   })
 
   .then(function(parsedJSON) {
-    
+    console.log(parsedJSON);
     let postArray = [];
 
     for (let i = 0; i < parsedJSON.data.length; i++) {
@@ -138,7 +138,8 @@ backendCall(event) {
       let miniPost = {score: parsedJSON.data[i].score,
       title: lengthChecker,
       url: parsedJSON.data[i].url,
-      preview: parsedJSON.data[i].preview};
+      preview: parsedJSON.data[i].preview,
+      id: parsedJSON.data[i].id};
       postArray.push(miniPost);
     };
     that.opacityAnimation(['.orange-circle','.blue-circle'],0)
@@ -157,11 +158,11 @@ backendCall(event) {
     let posts = this.state.postArray.map( (post) => {
     if (post.preview !== undefined && post.preview.enabled !== false) {
       return (
-        <GeneratedPost url={post.url} imageSRC={post.url} title={post.title} score={post.score}/>
+        <GeneratedPost key={post.id} url={post.url} imageSRC={post.url} title={post.title} score={post.score}/>
       )
     } else {
       return (
-        <GeneratedPost url={post.url} imageSRC={placeholder} title={post.title} score={post.score}/>       
+        <GeneratedPost key={post.id} url={post.url} imageSRC={placeholder} title={post.title} score={post.score}/>       
       )
     }
 
