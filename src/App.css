@@ -101,6 +101,15 @@ input[type=number] {
   margin: 1em;
 }
 
+input[type="text"][disabled] {
+  color: #E67F0D;
+}
+
+.generated-post video, .generated-post .gif {
+    max-height: 10em;
+    /* width: 10em; */
+}
+
 /* ANIMATION */
 #orange-circle {
   height: 25px;
@@ -146,8 +155,12 @@ input[type=number] {
   color: #E67F0D;
 }
 
-.generated-post img {
+.generated-post .thumbnail {
+  margin: 0.5em;
+}
+
+.generated-post .placeholder {
+  margin: 0.5em;
   height: 10em;
   width: 10em;
-  margin: 0.5em;
 }

@@ -12,8 +12,10 @@ import './App.css';
 export default class App extends Component {
   constructor(props) {
     super(props)
-    this.state= {
-      category: "Best",
+    this.state = {
+      // initialCategory: "Best",
+      // selectedCategory: "Best",
+      selectedCategory: "Best",
       minScore: -100,
       numPosts: 25,
       subreddit: "",
@@ -26,26 +28,29 @@ export default class App extends Component {
       selectedForm: "Category",
       
     } 
+    
     this.handleChange = this.handleChange.bind(this);
     this.backendCall = this.backendCall.bind(this);
     this.changeForm = this.changeForm.bind(this);
+    // console.log("constructor got called");
 }
 
 
 componentDidMount () {
+
   this.risingAnimation('.page-title');
+  // this.setState({selectedCategory: "Best"});
 }
 
 changeForm (state) {
   this.setState({
     selectedForm: state,
     searchTerm: "",
-    category: "Best",
+    selectedCategory: "Best",
   });
 }
 
 opacityAnimation(elements,opacity) {
-  console.log(elements,opacity);
   anime({
     targets: elements,
     opacity: opacity,
@@ -90,8 +95,8 @@ risingAnimation (element) {
 
 handleChange(event) {
   // dynamically set the key of the setstate object to be equal to the id of the specific form
-  let category = event.target.id;
-  this.setState({[category]: event.target.value});
+  let target = event.target.id;
+  this.setState({[target]: event.target.value});
 } 
         
 
@@ -108,17 +113,10 @@ backendCall(event) {
     this.loadingAnimation();
     this.setState({animationTracker: true});
   }
-  
-  let that = this;
-
-
 
   axios.get(backendURL, {
-    headers: {
-      // 'Content-Type': 'text/html',
-    },
     params: {
-      category: this.state.category,
+      category: this.state.selectedCategory,
       searchTerm: this.state.searchTerm,
       minScore: this.state.minScore,
       numPosts: this.state.numPosts,
@@ -129,22 +127,26 @@ backendCall(event) {
     return res;
   })
 
-  .then(function(parsedJSON) {
+  .then( (parsedJSON) =>  {
+
     console.log(parsedJSON);
     let postArray = [];
 
     for (let i = 0; i < parsedJSON.data.length; i++) {
       let lengthChecker = parsedJSON.data[i].title.length < 150 ? parsedJSON.data[i].title : parsedJSON.data[i].title.slice(0,150) + '...'
-      let miniPost = {score: parsedJSON.data[i].score,
+      let miniPost = {
+      score: parsedJSON.data[i].score,
       title: lengthChecker,
       url: parsedJSON.data[i].url,
       preview: parsedJSON.data[i].preview,
-      id: parsedJSON.data[i].id};
+      id: parsedJSON.data[i].id,
+      thumbnail: parsedJSON.data[i].thumbnail
+    };
       postArray.push(miniPost);
     };
-    that.opacityAnimation(['.orange-circle','.blue-circle'],0)
-    that.setState({postArray: postArray});
-    console.log(that.state.postArray);
+    this.opacityAnimation(['.orange-circle','.blue-circle'],0)
+    this.setState({postArray: postArray});
+    console.log(this.state.postArray);
   })
   .then(data => {
     this.risingAnimation('.generated-post');
@@ -155,20 +157,35 @@ backendCall(event) {
 // undefined = no preview
   render() {
 
+    // FOR GIFS
+    // 
+
     let posts = this.state.postArray.map( (post) => {
-    if (post.preview !== undefined && post.preview.enabled !== false) {
-      return (
-        <GeneratedPost key={post.id} url={post.url} imageSRC={post.url} title={post.title} score={post.score}/>
-      )
-    } else {
-      return (
-        <GeneratedPost key={post.id} url={post.url} imageSRC={placeholder} title={post.title} score={post.score}/>       
-      )
-    }
+     let thumbnail;
+     let imageType;
+     let videoPreview;
+
+     if (post?.preview?.reddit_video_preview !== undefined) {
+        imageType = "video";
+        videoPreview = post.preview.reddit_video_preview.fallback_url;
+     } else if (post.url.includes(".gif")) {
+        thumbnail = post.url;
+        imageType = "gif";
+     }  else if ((post.thumbnail !== "self" && post.thumbnail !== "default") && post.thumbnail) {
+        thumbnail = post.thumbnail;
+        imageType = "thumbnail";
+     } else {
+        thumbnail = placeholder;
+        imageType = "placeholder";
+     }
+     return (
+      <GeneratedPost videoPreview={videoPreview} imageType={imageType} key={post.id} url={post.url} thumbnail={thumbnail} title={post.title} score={post.score}/>  
+     )
 
     })
     return (
       <div className="App">
+
         <h1 className="page-title">Scrappy</h1>
         <p>
           <button id="about-button" className="btn btn-primary button-triad" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -180,7 +197,7 @@ backendCall(event) {
           The chief goal of this project is to learn more about APIs, scripting, and React. My project has two desired features - first, to allow users to view Reddit posts based on certain queries that Reddit itself does not allow users to search by. Second, to allow users to download searched content in aggregation.
           </div>
           
-        </div>        
+        </div>      
         <form className="request-form column-children" onSubmit={this.backendCall}>
           
         <div className="btn-group btn-group-toggle" data-toggle="buttons">
@@ -195,9 +212,8 @@ backendCall(event) {
           </label>
         </div>
 
-
           {this.state.selectedForm === "Category" 
-          ? <CategoryForm handleChange={this.handleChange.bind(this)}/>
+          ? <CategoryForm selectedCategory={this.state.selectedCategory} handleChange={this.handleChange.bind(this)}/>          
           : <TermForm handleChange={this.handleChange.bind(this)}
           searchTerm={this.state.searchTerm} timeframe={this.state.timeframe} />
           }
@@ -212,7 +228,7 @@ backendCall(event) {
             <input id="numPosts" className="rounded num-posts" value={this.state.numPosts} onChange={this.handleChange} type="number"/>
           </label>
 
-          {this.state.category === "Best" && this.state.selectedForm === "Category" ? 
+          {this.state.selectedCategory === "Best" && this.state.selectedForm === "Category" ? 
           <label htmlFor="subreddit">
             Subreddit (without the r/)	&nbsp;	&nbsp;	&nbsp;	&nbsp;	&nbsp;
             <input disabled id="subreddit" className="rounded subreddit" value="Does not work for 'best'" onChange={this.handleChange} type="text"/>
@@ -235,6 +251,27 @@ backendCall(event) {
         <div className="posts-container">
           {posts}
         </div>
+
+        
+        {/* <video src="https://i.redd.it/5duocz28a3y51.gif" autoPlay muted loop style={{
+           
+           height: "300px",
+           width: "300px"
+          
+
+        
+        }}>
+
+        </video>
+
+        <img src="https://i.redd.it/5duocz28a3y51.gif" alt="" style={{
+           
+           height: "300px",
+           width: "300px"
+          
+
+        
+        }}></img> */}
 
       </div>
     );
