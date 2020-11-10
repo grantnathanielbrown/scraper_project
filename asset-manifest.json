@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/scraper_project/static/css/main.6cb710ea.chunk.css",
-    "main.js": "/scraper_project/static/js/main.e87dc75f.chunk.js",
-    "main.js.map": "/scraper_project/static/js/main.e87dc75f.chunk.js.map",
+    "main.css": "/scraper_project/static/css/main.4ae95b7f.chunk.css",
+    "main.js": "/scraper_project/static/js/main.fbed2d68.chunk.js",
+    "main.js.map": "/scraper_project/static/js/main.fbed2d68.chunk.js.map",
     "runtime~main.js": "/scraper_project/static/js/runtime~main.d6dcd1d8.js",
     "runtime~main.js.map": "/scraper_project/static/js/runtime~main.d6dcd1d8.js.map",
     "static/js/2.33941468.chunk.js": "/scraper_project/static/js/2.33941468.chunk.js",
     "static/js/2.33941468.chunk.js.map": "/scraper_project/static/js/2.33941468.chunk.js.map",
     "index.html": "/scraper_project/index.html",
-    "precache-manifest.bfd446c9167c26ded2210aaf199e4f65.js": "/scraper_project/precache-manifest.bfd446c9167c26ded2210aaf199e4f65.js",
+    "precache-manifest.61c93a0d11ac362cd47cc509399d3d08.js": "/scraper_project/precache-manifest.61c93a0d11ac362cd47cc509399d3d08.js",
     "service-worker.js": "/scraper_project/service-worker.js",
-    "static/css/main.6cb710ea.chunk.css.map": "/scraper_project/static/css/main.6cb710ea.chunk.css.map",
+    "static/css/main.4ae95b7f.chunk.css.map": "/scraper_project/static/css/main.4ae95b7f.chunk.css.map",
     "static/media/wsi-imageoptim-reddit-marketing-.jpg": "/scraper_project/static/media/wsi-imageoptim-reddit-marketing-.a171ce6d.jpg"
   }
 }
